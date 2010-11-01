@@ -1,0 +1,50 @@
+neo4j
+=====
+
+  Neo4j manager that provides many storage commands
+
+
+Setup
+=====
+
+  1. compile
+    sbt package
+
+  2. alias for convient access to neo4j.ctl object
+    alias neo="scala -cp 'lib/*:target/scala_2.8.0/*' sc.ala.neo4j.ctl"
+
+
+Usage
+=====
+
+  neo <db-dir> <command>
+
+Following commands are available
+
+  * touch      : create an empty database
+  * example    : create a sample database
+  * info       : print node information
+  * load <tsv> : load graph data from tsv
+  * dump       : dump graph data as tsv
+  * list       : print list of node ids
+  * edges      : print edge list
+
+
+Example
+=======
+
+  # create a sample database in "/tmp/
+  neo /tmp/neo1 example
+
+  # dump graph data as tsv written with triple (n1,edge,n2)
+  neo /tmp/neo1 dump > data.tsv
+  cat data.tsv
+
+  # load graph data from tsv written with triple (n1,edge,n2)
+  neo /tmp/neo2 load data.tsv
+
+    
+Author
+======
+
+  maiha@wota.jp
