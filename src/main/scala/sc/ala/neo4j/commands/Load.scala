@@ -22,7 +22,6 @@ trait Load { this:Neo =>
   private var count = 0
   private var lines = scala.collection.mutable.ArrayBuffer[String]()
   private val numPerLoop = 5000
-  private val nodes = findNodeOrCreateByName
 
   private def flush {
     if (!lines.isEmpty) {
@@ -37,7 +36,7 @@ trait Load { this:Neo =>
 	      val msg = format("[IGNORE] same nodes! line:%d, data=%s",lineno, line)
 	      err.println(msg)
 	    } else {
-	      nodes(a(0)) --> a(1) --> nodes(a(2))
+	      N(a(0)) --> a(1) --> N(a(2))
 	    }
 	  } else {
 	    val msg = format("line:%d, size=%d, data=%s",lineno, a.size, line)

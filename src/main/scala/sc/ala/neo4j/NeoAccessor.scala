@@ -18,6 +18,10 @@ trait NeoAccessor { this:Neo =>
   val findNodeByName = (name:String) =>
     namedNodes.getOrElse(name, throw new NodeNotFound(name))
 
+  // convenient aliases
+  val n = findNodeByName
+  val N = findNodeOrCreateByName
+
   private def newNodeNamed(name:String) = {
     val node = db.createNode
     node("name") = name

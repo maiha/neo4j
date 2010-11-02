@@ -67,17 +67,31 @@ Coding
   % sbt console
 
     import sc.ala.neo4j.Neo
-    new Neo("/tmp/neo3") {
-      private val nodes = findNodeOrCreateByName
-      W{
-        nodes("Python") --> "Looks like" --> nodes("Ruby")
-      }
-    }
 
+    // create empty database
+    new Neo("/tmp/neo3") { touch }
 
-  % neo /tmp/neo3 edges
-  [1:Python] --(Looks like)--> [2:Ruby]
-  
+    // write new nodes and edges
+    new Neo("/tmp/neo3") { W{
+      N("Python") --> "Looks like" --> N("Ruby")
+    }}
+    // NOTE: here "W" is a writer transaction
+    // and "N" is an alias for findNodeOrCreateByName
+
+    // read node named "Ruby"
+    new Neo("/tmp/neo3") { R{
+      println("id: " + n("Ruby").getId)
+    }}
+    // => id: 2
+    // NOTE: here "R" is a reader transaction
+    // and "n" is an alias for findNodeByName
+
+    // "n" raise an error when the node is not found
+    new Neo("/tmp/neo3") { R{
+      n("XXX")
+    }}
+    // => sc.ala.neo4j.NodeNotFound: XXX
+
     
 Author
 ======

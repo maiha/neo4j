@@ -3,11 +3,7 @@ import sc.ala.neo4j.Neo
 
 trait Example { this:Neo =>
   def example = W{
-    val java  = nodes("Java")
-    val ruby  = nodes("Ruby")
-    val scala = nodes("Scala")
-    java --> "-null" --> scala <-- "+robust" <-- ruby
+    N("Java") --> "-null" --> N("Scala") <-- "+robust" <-- N("Ruby")
   }
-  private val nodes = findNodeOrCreateByName
 }
 
