@@ -23,6 +23,8 @@ Following commands are available
 Requirement
 ===========
 
+  * Scala-2.8.0
+
   Tested on following jars in neo4j-1.2.M02 
 
   * geronimo-jta_1.1_spec-1.1.1.jar
@@ -36,7 +38,7 @@ Setup
   1. compile
     % sbt package
 
-  2. alias for convient access to neo4j.ctl object
+  2. alias for convenient access to neo4j.ctl object
     % alias neo="scala -cp 'lib/*:target/scala_2.8.0/*' sc.ala.neo4j.ctl"
 
 

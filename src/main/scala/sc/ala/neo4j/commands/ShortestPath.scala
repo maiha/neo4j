@@ -13,12 +13,9 @@ trait ShortestPath { this:Neo =>
 
   def shortestPath(n1:String, n2:String, relName:String) = R{
     val rel   = DynamicRelationshipType.withName(relName)
-    val node1 = nodeNamed(n1)
-    val node2 = nodeNamed(n2)
-    val path  = new SingleSourceShortestPathBFS(node1, Direction.BOTH, rel)
-    val nodes = path.getPathAsNodes(node2)
+    val path  = new SingleSourceShortestPathBFS(n(n1), Direction.BOTH, rel)
+    val nodes = path.getPathAsNodes(n(n2))
 
-    println("size = " + nodes.size)
     nodes foreach( n => {
       printf("%s\n", inspectNode(n))
     })
