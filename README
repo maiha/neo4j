@@ -4,16 +4,6 @@ neo4j
   Neo4j manager that provides many storage commands
 
 
-Setup
-=====
-
-  1. compile
-    sbt package
-
-  2. alias for convient access to neo4j.ctl object
-    alias neo="scala -cp 'lib/*:target/scala_2.8.0/*' sc.ala.neo4j.ctl"
-
-
 Usage
 =====
 
@@ -30,19 +20,64 @@ Following commands are available
   * edges      : print edge list
 
 
-Example
-=======
+Requirement
+===========
 
-  # create a sample database in "/tmp/
-  neo /tmp/neo1 example
+  Tested on following jars in neo4j-1.2.M02 
 
-  # dump graph data as tsv written with triple (n1,edge,n2)
-  neo /tmp/neo1 dump > data.tsv
-  cat data.tsv
+  * geronimo-jta_1.1_spec-1.1.1.jar
+  * neo4j-graph-algo-0.7-1.2.M02.jar
+  * neo4j-kernel-1.2-1.2.M02.jar
 
-  # load graph data from tsv written with triple (n1,edge,n2)
-  neo /tmp/neo2 load data.tsv
 
+Setup
+=====
+
+  1. compile
+    % sbt package
+
+  2. alias for convient access to neo4j.ctl object
+    % alias neo="scala -cp 'lib/*:target/scala_2.8.0/*' sc.ala.neo4j.ctl"
+
+
+StorageManaging
+===============
+
+  create a sample database in "/tmp/neo1"
+
+    % neo /tmp/neo1 example
+
+  dump graph data as tsv written with triple (n1,edge,n2)
+
+    % neo /tmp/neo1 dump > data.tsv
+    % cat data.tsv
+    Java    -null   Scala
+    Ruby    +robust Scala
+
+  load graph data from tsv written with triple (n1,edge,n2)
+
+    % neo /tmp/neo2 load data.tsv
+
+  here, both /tmp/neo1 and /tmp/neo2 contain same data
+
+
+Coding
+======
+
+  % sbt console
+
+    import sc.ala.neo4j.Neo
+    new Neo("/tmp/neo3") {
+      private val nodes = findNodeOrCreateByName
+      W{
+        nodes("Python") --> "Looks like" --> nodes("Ruby")
+      }
+    }
+
+
+  % neo /tmp/neo3 edges
+  [1:Python] --(Looks like)--> [2:Ruby]
+  
     
 Author
 ======
